@@ -2,37 +2,34 @@ import axiosHttp from './axios'
 import { request } from '@bitverse/jsbridge'
 import { inBitverse } from '@/utils/'
 
-interface RequestParams {
-  method: 'post' | 'get'
+interface requestOptionType {
+  /**
+   * 完整的接口url，包含baseUrl + path
+   * 如：https://api2.bitverse-dev-1.bybit.com/bitverse/bitdapp/v1/public/worldcup/activity/guess
+   */
   url: string
-  headers?: Record<string, any>
+  method: 'post' | 'get'
   body?: Record<string, any>
   timeout?: number
   contentType?: string
   responseType?: string
+  debug?: boolean
 }
 
 export default {
-  async request(options: RequestParams) {
-    // console.log('request 参数: ', options, inBitverse)
+  async request(options: requestOptionType) {
     if (inBitverse) {
-      // const baseURL = import.meta.env.VITE_API_DOMAIN
-      const baseURL = ''
       const params = {
         ...options,
-        url: baseURL + options.url,
         contentType: 'application/json; charset=utf-8',
       }
-      // 调用 bridge
-      console.log('@ bridge.request 参数:', params)
-
+      // App内, 调用 bridge
+      options.debug && console.log('@bitverse.request request:', params)
       const response = await request(params)
-      console.log('@ bridge.request reponse', response)
+      options.debug && console.log('@bridge.request reponse:', response)
       if (response?.status === 200) {
         if (response.body.retCode === 0) {
           return response.body.result
-        } else {
-          return response.body
         }
       } else {
         return Promise.reject(response?.body)
@@ -50,8 +47,7 @@ export default {
           data: options.body,
         }
       }
-
-      // App 外环境
+      // App外, xhr/axios
       return await axiosHttp.request(axiosOptions)
     }
   },

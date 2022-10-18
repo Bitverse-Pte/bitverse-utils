@@ -1,13 +1,4 @@
-/**
- * 网络请求配置
- */
 import axios from 'axios'
-
-const timeout = 100000
-const baseURL = 'https://api2.bitverse-dev-1.bybit.com/bitverse/bitdapp/v1'
-// const baseURL = 'https://bitverse-dev-1.ofe.option.byops.io/bitverse/bitdapp/v1'
-// const baseURL = 'http://localhost:5173/bitverse/bitdapp/v1'
-// const baseURL = import.meta.env.VITE_API_DOMAIN
 
 /**
  * 创建 axios 请求实例
@@ -15,8 +6,8 @@ const baseURL = 'https://api2.bitverse-dev-1.bybit.com/bitverse/bitdapp/v1'
  * @see https://axios-http.com/docs/api_intro
  */
 const axiosHttp = axios.create({
-  baseURL: baseURL, // 基础请求地址
-  timeout: timeout, // 请求超时设置
+  // baseURL: baseURL, // 基础请求地址,由业务方传入,此处不指定
+  timeout: 100000, // 请求超时设置
   withCredentials: false, // 跨域请求是否需要携带 cookie
 })
 
@@ -25,8 +16,7 @@ const axiosHttp = axios.create({
  */
 axiosHttp.interceptors.request.use(
   (config) => {
-    console.log('request is ', config)
-    config.data = JSON.stringify(config.data)
+    config.debug && console.log('request is ', config)
     config.headers = {
       'Content-Type': 'application/json',
     }
@@ -42,7 +32,7 @@ axiosHttp.interceptors.request.use(
  */
 axiosHttp.interceptors.response.use(
   (response) => {
-    console.log('response is ', response)
+    response.config.debug && console.log('response is ', response)
     if (response.data.retCode === 0) {
       return response.data.result
     } else {
