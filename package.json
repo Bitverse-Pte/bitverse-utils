@@ -1,0 +1,38 @@
+{
+  "name": "@bitverse/utils",
+  "version": "0.1.0",
+  "description": "bitverse utils",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "unpkg": "dist/umd/jsbridge-utils.min.js",
+  "scripts": {
+    "dev": "father dev",
+    "build": "father build",
+    "build:deps": "father prebundle",
+    "prepublishOnly": "father doctor && npm run build",
+    "build:demo": "yarn && cd bridge-test &&  yarn  && npm run build"
+  },
+  "keywords": [
+    "bitverse",
+    "utils"
+  ],
+  "authors": [
+    "bitverse-fe"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist",
+    "compiled"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "father": "^4.0.6"
+  },
+  "dependencies": {
+    "@bitverse/jsbridge": "^0.1.4",
+    "axios": "^1.1.3"
+  }
+}
