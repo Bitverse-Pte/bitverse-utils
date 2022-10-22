@@ -19,22 +19,30 @@ interface requestOptionType {
 export default {
   async request(options: requestOptionType) {
     if (inBitverse) {
-      const params = {
-        ...options,
-        contentType: 'application/json; charset=utf-8',
-      }
       // App内, 调用 bridge
-      options.debug && console.log('@bitverse.request request:', params)
-      const response = await request(params)
-      options.debug && console.log('@bridge.request reponse:', response)
-      if (response?.status === 200) {
-        if (response.body.retCode === 0) {
-          return response.body.result
+      let response
+      try {
+        options.debug && console.log('@bitverse.request request:', options)
+        response = await request(options)
+        options.debug && console.log('@bridge.request reponse:', response)
+        return {
+          status: response?.status,
+          headers: response?.headers,
+          data: response?.body,
+          requestImpl: 'jsbridge',
+          errorCode: (response as unknown as any)?.errorCode,
+          errorMessage: (response as unknown as any)?.errorMessage,
         }
-      } else {
-        return Promise.reject(response?.body)
+      } catch (error) {
+        return Promise.reject({
+          status: response?.status,
+          headers: response?.headers,
+          data: response?.body,
+          requestImpl: 'jsbridge',
+        })
       }
     } else {
+      // App外, xhr/axios
       let axiosOptions = {}
       if (options.method.toLowerCase() === 'get') {
         axiosOptions = {
@@ -47,8 +55,11 @@ export default {
           data: options.body,
         }
       }
-      // App外, xhr/axios
-      return await axiosHttp.request(axiosOptions)
+      const response = await axiosHttp.request(axiosOptions)
+      return {
+        requestImpl: 'axios',
+        ...response,
+      }
     }
   },
 }
