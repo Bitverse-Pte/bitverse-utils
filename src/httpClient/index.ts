@@ -14,16 +14,18 @@ interface requestOptionType {
   contentType?: string
   responseType?: string
   debug?: boolean
+  enableJsBridgeRequest?: boolean
 }
 
 export default {
   async request(options: requestOptionType) {
-    if (inBitverse) {
+    const { enableJsBridgeRequest = true, ...requestOpts } = options
+    if (inBitverse && enableJsBridgeRequest) {
       // App内, 调用 bridge
       let response
       try {
         options.debug && console.log('@bitverse.request request:', options)
-        response = await request(options)
+        response = await request(requestOpts)
         options.debug && console.log('@bridge.request reponse:', response)
         return {
           status: response?.status,
