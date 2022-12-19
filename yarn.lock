@@ -196,11 +196,6 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@bitverse/jsbridge@^0.1.4":
-  version "0.1.4"
-  resolved "https://npm.ffe390afd658c19dcbf707e0597b846d.de/@bitverse%2fjsbridge/-/jsbridge-0.1.4.tgz#36120f653931100db6d209efc4328e6680b03316"
-  integrity sha512-ZYCPE6M6ImegtiLXqZvpBrUh5YVFCFGTe6poXvn6dVTtCxqOLFxJje34Bx4ilWbdtFLgyLZFADaX5BQor9PVHw==
-
 "@bloomberg/record-tuple-polyfill@0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@bloomberg/record-tuple-polyfill/-/record-tuple-polyfill-0.0.4.tgz#9ef3df44e472ceb9a0a2010d858a526f2021fefa"
@@ -870,6 +865,11 @@ binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
+
+bitverse-jsbridge@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.npmjs.org/bitverse-jsbridge/-/bitverse-jsbridge-0.1.4.tgz#41ec3da20584028d8065a156163ad18322009184"
+  integrity sha512-a21KrQlOde3I+EogQ/Jz6Qv8BMMhb4DS3DySc+s3HH9pC4J7HVS1Yp/+MqiW8cRJo92JAsrjsMsyNgIAAx/WmQ==
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.9:
   version "4.12.0"
